@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "PrivacyLens AI",
+  "version": "1.0.0",
+  "description": "See the screen. Protect the data. Automate privately.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "utils/privacy-score.js",
+        "content/pii-detector.js",
+        "content/redactor.js",
+        "content/dom-analyzer.js",
+        "content/content.js"
+      ]
+    }
+  ]
+}

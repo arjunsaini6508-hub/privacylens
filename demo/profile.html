@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo - Profile</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; background: #f0f2f5; }
+        .box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 400px; }
+        input { width: 100%; padding: 10px; margin-bottom: 15px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #10b981; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>My Profile (TEST DATA)</h2>
+        <label>Full Name</label>
+        <input type="text" id="name" value="Rahul Sharma" />
+        <label>Date of Birth</label>
+        <input type="text" id="dob" value="15-08-1995" />
+        <label>Aadhaar Number</label>
+        <input type="text" id="aadhaar" value="1234 5678 9012" />
+        <label>PAN Card</label>
+        <input type="text" id="pan" value="ABCDE1234F" />
+        <label>Postal Code</label>
+        <input type="text" id="pincode" value="302001" />
+        <button onclick="alert('Saved')">Save Profile</button>
+    </div>
+</body>
+</html>

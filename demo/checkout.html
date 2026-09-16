@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo 2 - Checkout</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f2f5; margin: 0; padding: 20px; }
+        .checkout-box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; margin-top: 20px; }
+        button:hover { background: #218838; }
+        .btn-cancel { background: #6c757d; }
+        .btn-cancel:hover { background: #5a6268; }
+        .section-title { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="checkout-box">
+        <h2 class="section-title">Shipping & Payment Checkout</h2>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="fullName">Name</label>
+                <input type="text" id="fullName" value="Rahul Sharma" autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <!-- the test specifically requested this value in an anchor, but usually it's in input. I will add both. -->
+                <input type="email" id="email" value="rahul@example.com" autocomplete="email">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" value="9876543210" autocomplete="tel">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" value="secret123" autocomplete="current-password">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="cardNumber">Card</label>
+                <input type="text" id="cardNumber" value="4111111111111111" autocomplete="cc-number">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" value="Jaipur, Rajasthan" autocomplete="street-address">
+            </div>
+        </div>
+
+        <button id="checkout-btn" onclick="alert('Continue clicked!')">Continue</button>
+        <button id="cancel-btn" class="btn-cancel" onclick="alert('Cancel clicked!')">Cancel</button>
+        
+        <div style="margin-top: 20px; font-size: 12px; color: #666;">
+            Contact us at <a href="mailto:rahul@example.com">rahul@example.com</a>
+        </div>
+    </div>
+</body>
+</html>

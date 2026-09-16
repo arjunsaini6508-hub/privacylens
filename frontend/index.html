@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivacyLens AI Dashboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <h2>PrivacyLens</h2>
+            </div>
+            <nav class="nav-menu" id="main-nav">
+                <a href="#" class="nav-item active" data-view="overview">
+                    <span class="icon">📊</span> Overview
+                </a>
+                <a href="#" class="nav-item" data-view="pii">
+                    <span class="icon">🛡️</span> PII Detections
+                </a>
+                <a href="#" class="nav-item" data-view="network">
+                    <span class="icon">🌐</span> Network Activity
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <span class="icon">⚙️</span> Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="dot pulse"></span> Agent Active
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="greeting">
+                    <h1 id="header-title">Dashboard Overview</h1>
+                    <p id="header-subtitle">Monitor local privacy protection and agent activity.</p>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Local+User&background=0D8ABC&color=fff" alt="User Profile">
+                </div>
+            </header>
+
+            <!-- VIEW: OVERVIEW -->
+            <div id="view-overview" class="view-section active">
+                <div class="metrics-grid">
+                    <!-- Privacy Score Card -->
+                    <div class="card glass-panel metric-card">
+                        <div class="card-header">
+                            <h3>Privacy Score</h3>
+                            <span class="trend positive">↑ 12%</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="score-display">
+                                <span class="score-value" id="overview-score">94</span>
+                                <span class="score-total">/100</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="overview-score-bar" style="width: 94%;"></div>
+                            </div>
+                            <p class="status-text">Your local sessions are highly protected.</p>
+                        </div>
+                    </div>
+
+                    <!-- Blocked PII Card -->
+                    <div class="card glass-panel metric-card" style="cursor: pointer;" onclick="document.querySelector('[data-view=\'pii\']').click()">
+                        <div class="card-header">
+                            <h3>PII Redacted</h3>
+                            <span class="trend neutral">-</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-number" id="overview-pii-count">48</div>
+                            <p class="status-text">Sensitive elements masked in current session.</p>
+                            <div class="tags-row">
+                                <span class="tag">Email</span>
+                                <span class="tag">Phone</span>
+                                <span class="tag">Password</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Requests Card -->
+                    <div class="card glass-panel metric-card" style="cursor: pointer;" onclick="document.querySelector('[data-view=\'network\']').click()">
+                        <div class="card-header">
+                            <h3>Network Activity</h3>
+                            <span class="trend negative" id="overview-network-blocked">2 Blocked</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="metric-number" id="overview-network-total">124</div>
+                            <p class="status-text">Total requests monitored (1st & 3rd party).</p>
+                            <div class="chart-mockup">
+                                <div class="bar" style="height: 60%;"></div>
+                                <div class="bar" style="height: 80%;"></div>
+                                <div class="bar" style="height: 40%;"></div>
+                                <div class="bar" style="height: 100%;"></div>
+                                <div class="bar" style="height: 70%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Section -->
+                <section class="activity-section" style="margin-top: 32px;">
+                    <div class="card glass-panel activity-card">
+                        <div class="card-header">
+                            <h3>Recent Redactions</h3>
+                            <button class="btn btn-secondary" id="btn-view-all">View All</button>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-list" id="recent-redactions-list">
+                                <!-- Populated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- VIEW: PII DETECTIONS -->
+            <div id="view-pii" class="view-section" style="display: none;">
+                <div class="card glass-panel" style="padding: 24px;">
+                    <h2>PII Detection Categories</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Detailed breakdown of redacted PII. Raw values are never stored.</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>📧 Emails</h4>
+                            <p class="metric-number" id="pii-emails">12</p>
+                        </div>
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>🔑 Passwords</h4>
+                            <p class="metric-number" id="pii-passwords">4</p>
+                        </div>
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>💳 Credit Cards</h4>
+                            <p class="metric-number" id="pii-cc">2</p>
+                        </div>
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>📱 Phone Numbers</h4>
+                            <p class="metric-number" id="pii-phones">8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: NETWORK ACTIVITY -->
+            <div id="view-network" class="view-section" style="display: none;">
+                <div class="card glass-panel" style="padding: 24px;">
+                    <h2>Network Activity Analysis</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Breakdown of intercepted and monitored requests.</p>
+                    
+                    <div class="metrics-grid">
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>Total Requests</h4>
+                            <p class="metric-number" id="net-total">124</p>
+                        </div>
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>1st Party</h4>
+                            <p class="metric-number" id="net-first" style="color: var(--success);">80</p>
+                        </div>
+                        <div class="glass-panel" style="padding: 16px;">
+                            <h4>3rd Party</h4>
+                            <p class="metric-number" id="net-third" style="color: var(--warning);">44</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: SETTINGS -->
+            <div id="view-settings" class="view-section" style="display: none;">
+                <div class="card glass-panel" style="padding: 24px;">
+                    <h2>Agent Settings</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Configure local privacy protection behaviors.</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="setting-item" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4>Detect PII Locally</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary);">Enable the DOM analyzer to detect PII.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="setting-detect-pii">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4>Auto-Redact PII</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary);">Automatically mask PII visually in the browser.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="setting-auto-redact">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4>Track Network Requests</h4>
+                                <p style="font-size: 0.875rem; color: var(--text-secondary);">Monitor 1st vs 3rd party connections.</p>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="setting-track-network">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        
+                        <button id="btn-save-settings" class="btn btn-secondary" style="margin-top: 16px; background: var(--accent-blue); color: white; border: none;">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: HISTORY (VIEW ALL) -->
+            <div id="view-history" class="view-section" style="display: none;">
+                <div class="card glass-panel activity-card">
+                    <div class="card-header">
+                        <h2>Complete History</h2>
+                        <button class="btn btn-secondary" onclick="document.querySelector('[data-view=\'overview\']').click()">Back to Overview</button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="activity-list" id="history-redactions-list">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MODAL: REDACTION DETAILS -->
+            <div id="details-modal" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+                <div class="glass-panel" style="padding: 24px; width: 400px; max-width: 90%;">
+                    <h3 style="margin-bottom: 16px;">Redaction Details</h3>
+                    <div id="modal-content" style="margin-bottom: 24px;"></div>
+                    <button class="btn btn-secondary" onclick="document.getElementById('details-modal').style.display='none'">Close</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
