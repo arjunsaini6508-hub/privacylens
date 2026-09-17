@@ -7,20 +7,21 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar glass-panel">
+        <aside class="sidebar">
             <div class="logo">
-                <div class="logo-icon"></div>
-                <h2>PrivacyLens</h2>
+                <div class="logo-icon">🛡️</div>
+                <h2>PrivacyLens AI</h2>
             </div>
+            
             <nav class="nav-menu" id="main-nav">
                 <a href="#" class="nav-item active" data-view="overview">
-                    <span class="icon">📊</span> Overview
+                    <span class="icon">📊</span> Dashboard
                 </a>
                 <a href="#" class="nav-item" data-view="pii">
                     <span class="icon">🛡️</span> PII Detections
@@ -28,125 +29,204 @@
                 <a href="#" class="nav-item" data-view="network">
                     <span class="icon">🌐</span> Network Activity
                 </a>
+                <a href="#" class="nav-item" data-view="history">
+                    <span class="icon">📑</span> Redactions
+                </a>
                 <a href="#" class="nav-item" data-view="settings">
                     <span class="icon">⚙️</span> Settings
                 </a>
             </nav>
+            
             <div class="sidebar-footer">
-                <div class="status-indicator">
-                    <span class="dot pulse"></span> Agent Active
+                <div class="user-profile-sidebar">
+                    <img src="https://ui-avatars.com/api/?name=Arjun&background=E5E7EB&color=111" alt="Arjun">
+                    <div class="user-info">
+                        <h4>Arjun</h4>
+                        <p>Free Plan</p>
+                    </div>
                 </div>
             </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
+            
             <header class="top-header">
-                <div class="greeting">
-                    <h1 id="header-title">Dashboard Overview</h1>
-                    <p id="header-subtitle">Monitor local privacy protection and agent activity.</p>
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search pages, detections, or settings...">
                 </div>
-                <div class="user-profile">
-                    <img src="https://ui-avatars.com/api/?name=Local+User&background=0D8ABC&color=fff" alt="User Profile">
+                <div class="header-actions">
+                    <div class="date-pill">
+                        📅 <span id="current-date-display">Today</span>
+                    </div>
+                    <button class="notification-btn">🔔</button>
+                    <button class="avatar-btn">
+                        <img src="https://ui-avatars.com/api/?name=Arjun&background=111&color=fff" alt="User">
+                    </button>
                 </div>
             </header>
 
+            <div class="dashboard-greeting">
+                <h1 id="header-title">Good morning, Arjun 👋</h1>
+                <p id="header-subtitle">Here's your privacy overview for today.</p>
+            </div>
+
             <!-- VIEW: OVERVIEW -->
             <div id="view-overview" class="view-section active">
+                
                 <div class="metrics-grid">
                     <!-- Privacy Score Card -->
-                    <div class="card glass-panel metric-card">
+                    <div class="card metric-card score-card" style="background-color: #F4FBE4;">
                         <div class="card-header">
-                            <h3>Privacy Score</h3>
-                            <span class="trend positive">↑ 12%</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="score-display">
-                                <span class="score-value" id="overview-score">94</span>
-                                <span class="score-total">/100</span>
+                            <div class="card-title-group">
+                                <div class="card-icon success-bg">🛡️</div>
+                                <h3>Privacy Score</h3>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="overview-score-bar" style="width: 94%;"></div>
-                            </div>
-                            <p class="status-text">Your local sessions are highly protected.</p>
+                            <span class="trend">↑ 12%</span>
                         </div>
+                        <div class="metric-value success">
+                            <span id="overview-score">--</span><span class="total" style="font-size: 1.5rem; color: var(--text-secondary);"> / 100</span>
+                        </div>
+                        <div id="overview-score-status" style="font-size: 0.875rem; font-weight: 500; padding: 4px 12px; border-radius: 12px; display: inline-block; background: var(--bg-secondary);">Not analyzed</div>
+                        <div id="overview-score-breakdown" style="display:none; text-align:left; font-size:0.875rem; margin-top:24px; padding-top:16px; border-top:1px solid rgba(0,0,0,0.1);"></div>
+                        
+                        <!-- Hidden elements to preserve JS compatibility -->
+                        <div id="overview-score-bar" style="display:none;"></div>
                     </div>
 
-                    <!-- Blocked PII Card -->
-                    <div class="card glass-panel metric-card" style="cursor: pointer;" onclick="document.querySelector('[data-view=\'pii\']').click()">
+                    <!-- PII Detected Card -->
+                    <div class="card metric-card" style="cursor: pointer;" onclick="document.querySelector('[data-view=\'pii\']').click()">
                         <div class="card-header">
-                            <h3>PII Redacted</h3>
-                            <span class="trend neutral">-</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="metric-number" id="overview-pii-count">48</div>
-                            <p class="status-text">Sensitive elements masked in current session.</p>
-                            <div class="tags-row">
-                                <span class="tag">Email</span>
-                                <span class="tag">Phone</span>
-                                <span class="tag">Password</span>
+                            <div class="card-title-group">
+                                <div class="card-icon neutral-bg">📄</div>
+                                <h3>PII Detected</h3>
                             </div>
                         </div>
+                        <div class="metric-value neutral" id="overview-pii-count">
+                            5
+                        </div>
+                        <p class="metric-desc">Sensitive elements masked in current session.</p>
                     </div>
 
-                    <!-- Network Requests Card -->
-                    <div class="card glass-panel metric-card" style="cursor: pointer;" onclick="document.querySelector('[data-view=\'network\']').click()">
+                    <!-- Network Activity Card -->
+                    <div class="card metric-card" style="cursor: pointer;" onclick="document.querySelector('[data-view=\'network\']').click()">
                         <div class="card-header">
-                            <h3>Network Activity</h3>
-                            <span class="trend negative" id="overview-network-blocked">2 Blocked</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="metric-number" id="overview-network-total">124</div>
-                            <p class="status-text">Total requests monitored (1st & 3rd party).</p>
-                            <div class="chart-mockup">
-                                <div class="bar" style="height: 60%;"></div>
-                                <div class="bar" style="height: 80%;"></div>
-                                <div class="bar" style="height: 40%;"></div>
-                                <div class="bar" style="height: 100%;"></div>
-                                <div class="bar" style="height: 70%;"></div>
+                            <div class="card-title-group">
+                                <div class="card-icon neutral-bg">🌐</div>
+                                <h3>Network Activity</h3>
                             </div>
+                            <span id="overview-network-blocked" style="display:none;"></span>
+                        </div>
+                        <div class="metric-value neutral" id="overview-network-total">
+                            124
+                        </div>
+                        <p class="metric-desc">Total requests monitored (1st & 3rd party).</p>
+                        <div class="network-chart-container">
+                            <div class="bar-group"><div class="bar-3p bar" style="height: 30%;"></div><div class="bar-1p bar" style="height: 40%;"></div></div>
+                            <div class="bar-group"><div class="bar-3p bar" style="height: 50%;"></div><div class="bar-1p bar" style="height: 30%;"></div></div>
+                            <div class="bar-group"><div class="bar-3p bar" style="height: 20%;"></div><div class="bar-1p bar" style="height: 60%;"></div></div>
+                            <div class="bar-group"><div class="bar-3p bar" style="height: 60%;"></div><div class="bar-1p bar" style="height: 20%;"></div></div>
+                            <div class="bar-group"><div class="bar-3p bar" style="height: 40%;"></div><div class="bar-1p bar" style="height: 50%;"></div></div>
+                            <div class="bar-group"><div class="bar-3p bar" style="height: 20%;"></div><div class="bar-1p bar" style="height: 70%;"></div></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Recent Activity Section -->
-                <section class="activity-section" style="margin-top: 32px;">
-                    <div class="card glass-panel activity-card">
-                        <div class="card-header">
-                            <h3>Recent Redactions</h3>
-                            <button class="btn btn-secondary" id="btn-view-all">View All</button>
+                <div class="sub-grid">
+                    <!-- Network Activity Section -->
+                    <div class="card" style="padding: 24px;">
+                        <div class="section-header">
+                            <h3>Network Activity</h3>
+                            <select class="filter-dropdown">
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                            </select>
                         </div>
-                        <div class="card-body">
-                            <ul class="activity-list" id="recent-redactions-list">
-                                <!-- Populated by JS -->
-                            </ul>
+                        <div style="height: 200px; display: flex; align-items: flex-end; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+                            <!-- Mockup for network chart -->
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 40%;"></div><div class="bar-1p bar" style="height: 30%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Mon</span>
+                            </div>
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 30%;"></div><div class="bar-1p bar" style="height: 50%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Tue</span>
+                            </div>
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 50%;"></div><div class="bar-1p bar" style="height: 60%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Wed</span>
+                            </div>
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 20%;"></div><div class="bar-1p bar" style="height: 40%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Thu</span>
+                            </div>
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 40%;"></div><div class="bar-1p bar" style="height: 50%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Fri</span>
+                            </div>
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 20%;"></div><div class="bar-1p bar" style="height: 70%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Sat</span>
+                            </div>
+                            <div class="bar-group" style="flex:1; display:flex; flex-direction:column; justify-content:flex-end; gap:4px; height:100%;">
+                                <div class="bar-3p bar" style="height: 60%;"></div><div class="bar-1p bar" style="height: 80%;"></div>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:8px;">Sun</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; justify-content:center; gap:24px; font-size:0.875rem;">
+                            <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:12px; height:12px; background:var(--accent-lime); border-radius:50%;"></span> 1st-party</div>
+                            <div style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:12px; height:12px; background:var(--success); border-radius:50%;"></span> 3rd-party</div>
                         </div>
                     </div>
-                </section>
+
+                    <!-- Recent Redactions Section -->
+                    <div class="card" style="padding: 24px;">
+                        <div class="section-header">
+                            <h3>Recent Redactions</h3>
+                            <button class="btn-link" id="btn-view-all">View All →</button>
+                        </div>
+                        <ul class="activity-list" id="recent-redactions-list">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 12px;">Quick Actions</h3>
+                    <div class="quick-actions-row">
+                        <button class="btn-action" onclick="alert('Analyze Current Page requires extension environment.')">📄 Analyze Current Page</button>
+                        <button class="btn-action" onclick="alert('Scan DOM JSON requires extension environment.')">{'<>'}</button>
+                        <button class="btn-action" onclick="document.querySelector('[data-view=\'history\']').click()">📊 View Reports</button>
+                        <button class="btn-action" onclick="document.querySelector('[data-view=\'settings\']').click()">⚙️ Open Settings</button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- VIEW: PII DETECTIONS -->
             <div id="view-pii" class="view-section" style="display: none;">
-                <div class="card glass-panel" style="padding: 24px;">
-                    <h2>PII Detection Categories</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Detailed breakdown of redacted PII. Raw values are never stored.</p>
+                <div class="card" style="padding: 32px;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 8px;">PII Detection Categories</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 32px;">Detailed breakdown of redacted PII. Raw values are never stored.</p>
                     
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>📧 Emails</h4>
-                            <p class="metric-number" id="pii-emails">12</p>
+                    <div class="metrics-grid">
+                        <div class="card" style="padding: 24px;">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">📧 Emails</h4>
+                            <p class="metric-value" id="pii-emails">0</p>
                         </div>
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>🔑 Passwords</h4>
-                            <p class="metric-number" id="pii-passwords">4</p>
+                        <div class="card" style="padding: 24px;">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">🔑 Passwords</h4>
+                            <p class="metric-value" id="pii-passwords">0</p>
                         </div>
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>💳 Credit Cards</h4>
-                            <p class="metric-number" id="pii-cc">2</p>
+                        <div class="card" style="padding: 24px;">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">💳 Credit Cards</h4>
+                            <p class="metric-value" id="pii-cc">0</p>
                         </div>
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>📱 Phone Numbers</h4>
-                            <p class="metric-number" id="pii-phones">8</p>
+                        <div class="card" style="padding: 24px;">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">📱 Phone Numbers</h4>
+                            <p class="metric-value" id="pii-phones">0</p>
                         </div>
                     </div>
                 </div>
@@ -154,34 +234,41 @@
 
             <!-- VIEW: NETWORK ACTIVITY -->
             <div id="view-network" class="view-section" style="display: none;">
-                <div class="card glass-panel" style="padding: 24px;">
-                    <h2>Network Activity Analysis</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Breakdown of intercepted and monitored requests.</p>
+                <div class="card" style="padding: 32px;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Network Activity Analysis</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 32px;">Breakdown of intercepted and monitored requests.</p>
                     
                     <div class="metrics-grid">
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>Total Requests</h4>
-                            <p class="metric-number" id="net-total">124</p>
+                        <div class="card" style="padding: 24px;">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">Total Requests</h4>
+                            <p class="metric-value" id="net-total">0</p>
                         </div>
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>1st Party</h4>
-                            <p class="metric-number" id="net-first" style="color: var(--success);">80</p>
+                        <div class="card" style="padding: 24px; border-bottom: 4px solid var(--success);">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">1st Party</h4>
+                            <p class="metric-value" id="net-first" style="color: var(--success);">0</p>
                         </div>
-                        <div class="glass-panel" style="padding: 16px;">
-                            <h4>3rd Party</h4>
-                            <p class="metric-number" id="net-third" style="color: var(--warning);">44</p>
+                        <div class="card" style="padding: 24px; border-bottom: 4px solid var(--warning);">
+                            <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:12px;">3rd Party</h4>
+                            <p class="metric-value" id="net-third" style="color: var(--warning);">0</p>
                         </div>
+                    </div>
+                    
+                    <div style="margin-top: 32px;">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 16px;">Recent Requests</h3>
+                        <ul class="activity-list" id="network-requests-list">
+                            <!-- Populated by JS -->
+                        </ul>
                     </div>
                 </div>
             </div>
 
             <!-- VIEW: SETTINGS -->
             <div id="view-settings" class="view-section" style="display: none;">
-                <div class="card glass-panel" style="padding: 24px;">
-                    <h2>Agent Settings</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Configure local privacy protection behaviors.</p>
+                <div class="card" style="padding: 32px; max-width: 800px;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Agent Settings</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 32px;">Configure local privacy protection behaviors.</p>
                     
-                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; flex-direction: column;">
                         <div class="setting-item" style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <h4>Detect PII Locally</h4>
@@ -189,7 +276,7 @@
                             </div>
                             <label class="switch">
                                 <input type="checkbox" id="setting-detect-pii">
-                                <span class="slider round"></span>
+                                <span class="slider"></span>
                             </label>
                         </div>
 
@@ -200,7 +287,7 @@
                             </div>
                             <label class="switch">
                                 <input type="checkbox" id="setting-auto-redact">
-                                <span class="slider round"></span>
+                                <span class="slider"></span>
                             </label>
                         </div>
 
@@ -211,23 +298,25 @@
                             </div>
                             <label class="switch">
                                 <input type="checkbox" id="setting-track-network">
-                                <span class="slider round"></span>
+                                <span class="slider"></span>
                             </label>
                         </div>
                         
-                        <button id="btn-save-settings" class="btn btn-secondary" style="margin-top: 16px; background: var(--accent-blue); color: white; border: none;">Save Settings</button>
+                        <div style="margin-top: 32px;">
+                            <button id="btn-save-settings" class="btn-primary">Save Settings</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- VIEW: HISTORY (VIEW ALL) -->
             <div id="view-history" class="view-section" style="display: none;">
-                <div class="card glass-panel activity-card">
-                    <div class="card-header">
-                        <h2>Complete History</h2>
-                        <button class="btn btn-secondary" onclick="document.querySelector('[data-view=\'overview\']').click()">Back to Overview</button>
+                <div class="card" style="padding: 32px;">
+                    <div class="section-header">
+                        <h2 style="font-size: 1.5rem;">Complete Redaction History</h2>
+                        <button class="btn-action" onclick="document.querySelector('[data-view=\'overview\']').click()">Back to Dashboard</button>
                     </div>
-                    <div class="card-body">
+                    <div style="margin-top: 24px;">
                         <ul class="activity-list" id="history-redactions-list">
                             <!-- Populated by JS -->
                         </ul>
@@ -236,11 +325,13 @@
             </div>
             
             <!-- MODAL: REDACTION DETAILS -->
-            <div id="details-modal" class="modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
-                <div class="glass-panel" style="padding: 24px; width: 400px; max-width: 90%;">
-                    <h3 style="margin-bottom: 16px;">Redaction Details</h3>
-                    <div id="modal-content" style="margin-bottom: 24px;"></div>
-                    <button class="btn btn-secondary" onclick="document.getElementById('details-modal').style.display='none'">Close</button>
+            <div id="details-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+                <div class="card" style="padding: 32px; width: 450px; max-width: 90%;">
+                    <h3 style="margin-bottom: 24px; font-size: 1.25rem;">Redaction Details</h3>
+                    <div id="modal-content" style="margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;"></div>
+                    <div style="display:flex; justify-content:flex-end;">
+                        <button class="btn-action" onclick="document.getElementById('details-modal').style.display='none'">Close</button>
+                    </div>
                 </div>
             </div>
 
@@ -248,5 +339,9 @@
     </div>
 
     <script src="js/app.js"></script>
+    <script>
+        // Set dynamic date in header
+        document.getElementById('current-date-display').textContent = new Date().toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    </script>
 </body>
 </html>

@@ -14,7 +14,10 @@
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background/background.js",
+    "scripts": [
+      "compatibility/browserAPI.js",
+      "background/background.js"
+    ],
     "type": "module"
   },
   "action": {
@@ -22,7 +25,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "js": [
         "compatibility/browserAPI.js",
         "utils/privacy-score.js",
@@ -32,5 +37,11 @@
         "content/content.js"
       ]
     }
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "privacylens@arjun.kataria",
+      "strict_min_version": "109.0"
+    }
+  }
 }
